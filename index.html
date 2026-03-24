@@ -1,16 +1,46 @@
-<div class="container">
-  <img src="shopee-logo.png" alt="Shopee" class="logo">
-  <div class="truck-box">
-    <div class="truck">🚚💨</div>
-    <div class="flat-tire">💥</div>
-  </div>
-  <h1>物流車正在努力超車中...</h1>
-  <p>由於目前搶購人數過多，我們的物流引擎有點發燙。</p>
-  
-  <div class="progress-container">
-    <div id="progress-bar"></div>
-  </div>
-  
-  <p class="timer-text">系統將在 <span id="seconds">10</span> 秒後自動重新嘗試</p>
-  <button onclick="location.reload()" class="retry-btn">立即重試</button>
-</div>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蝦皮購物 - 物流車加油中</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg" alt="Shopee Logo" class="logo">
+        
+        <div class="animation-stage">
+            <div class="truck-box">
+                <div class="truck">🚚</div>
+                <div class="tire-boom">💥</div>
+            </div>
+        </div>
+        
+        <div class="content-box">
+            <h1>物流車正在努力超車中...</h1>
+            <p>好貨太搶手，物流引擎有點發燙了。<br>請稍候，我們正在全力全開中！</p>
+            
+            <div class="progress-wrapper">
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <div class="progress-status">
+                    <span>修復中...</span>
+                    <span><span id="seconds">15</span> 秒後自動重試</span>
+                </div>
+            </div>
+            
+            <div class="action-box">
+                <button onclick="location.reload()" class="retry-btn">立即重試</button>
+                <a href="https://help.shopee.tw/" target="_blank" class="help-link">需要幫助？</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
