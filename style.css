@@ -65,10 +65,22 @@ body {
   }
 }
 
+/* --- 修正蝦皮 Logo 跑版與置中 --- */
 .logo {
-  width: 130px;
-  margin-bottom: 30px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    display: block;            /* 讓圖片變成區塊元素，方便置中 */
+    margin: 0 auto 30px;      /* 左右自動置中，下方留 30px 間距 */
+    max-width: 180px;         /* 限制最大寬度，避免圖片太大撐破版面 */
+    width: 60%;               /* 在手機版時縮小至容器的 60% */
+    height: auto;             /* 自動計算高度，保證 Logo 不會被壓扁或拉長 */
+    object-fit: contain;      /* 確保圖片內容完整顯示在框架內 */
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05)); /* 加上淡淡的陰影增加質感 */
+}
+
+/* 針對小螢幕手機微調 */
+@media (max-width: 480px) {
+    .logo {
+        max-width: 140px;      /* 手機上 Logo 再縮小一點點，比例更和諧 */
+    }
 }
 
 /* --- 文字風格 --- */
