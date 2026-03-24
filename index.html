@@ -3,44 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蝦皮購物 - 物流車加油中</title>
-    <link rel="stylesheet" href="style.css">
+    <title>蝦皮購物 | 系統維護中 - 物流車加油中</title>
+    <style>
+        /* --- 變數與基礎設定 --- */
+        :root {
+            --shopee-orange: #EE4D2D;
+            --shopee-bg: #f5f5f5;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--shopee-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- 背景裝飾圖形 (呼吸動畫) --- */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            filter: blur(60px);
+            z-index: 0;
+            animation: float 8s infinite alternate ease-in-out;
+        }
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background-color: #ffccbc;
+            top: -50px;
+            right: -50px;
+        }
+        .shape-2 {
+            width: 450px;
+            height: 450px;
+            background-color: #ffe0b2;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(30px, 50px); }
+        }
+
+        /* --- 主容器 (毛玻璃效果) --- */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.6);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 140px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        /* --- 物流車動畫區 --- */
+        .animation-stage {
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .truck-box {
+            position: relative;
+            font-size: 60px;
+        }
+
+        .truck {
+            animation: truckDrive 1.2s infinite linear;
+            display: inline-block;
+        }
+
+        .tire-boom {
+            font-size: 35px;
+            position: absolute;
+            bottom: -5px;
+            left: 10px;
+            opacity: 0;
+            animation: boomShow 1.2s infinite linear 0.4s;
+        }
+
+        @keyframes truckDrive {
+            0%, 100% { transform: translateX(-5px) rotate(0deg); }
+            50% { transform: translateX(5px) rotate(-3deg); }
+        }
+
+        @keyframes boomShow {
+            0% { opacity: 0; transform: scale(0.5); }
+            40% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(1.5) translate(-10px, -10px); filter: blur(3px); }
+        }
+
+        /* --- 文字內容 --- */
+        h1 {
+            color: var(--shopee-orange);
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        #tip-text {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.6;
+            height: 48px; /* 固定高度防止跳動 */
+            transition: opacity 0.4s ease;
+        }
+
+        /* --- 進度條美化 --- */
+        .progress-wrapper {
+            margin: 25px 0;
+        }
+
+        .progress-container {
+            background: #eee;
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 8px;
+        }
+
+        #progress-bar {
+            background: linear-gradient(90deg, #ff8a65, var(--shopee-orange));
+            height: 100%;
+            width: 0%;
+            border-radius: 20px;
+            transition: width 0.5s linear;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* --- 按鈕組 --- */
+        .action-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .retry-btn {
+            background-color: var(--shopee-orange);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(238, 77, 45, 0.3);
+            transition: 0.3s;
+        }
+
+        .retry-btn:hover {
+            background-color: #d73d1f;
+            transform: translateY(-2px);
+        }
+
+        .secondary-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sub-btn {
+            flex: 1;
+            text-decoration: none;
+            font-size: 14px;
+            color: var(--shopee-orange);
+            border: 1px solid var(--shopee-orange);
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.2s;
+            background: transparent;
+        }
+
+        .sub-btn:hover { background: #fff5f2; }
+
+        /* --- 頁尾聯繫 --- */
+        .footer-note {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .footer-note p {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 6px;
+        }
+
+        .help-link {
+            font-size: 13px;
+            color: #666;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+
     <div class="bg-shape shape-1"></div>
     <div class="bg-shape shape-2"></div>
 
     <div class="container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg" alt="Shopee Logo" class="logo">
-        
+        <svg class="logo" viewBox="0 0 100 35" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EE4D2D" d="M10.1 19.3c0-3.1 2.5-5.6 5.6-5.6s5.6 2.5 5.6 5.6-2.5 5.6-5.6 5.6-5.6-2.5-5.6-5.6zm11.2-12.8c-1.1 0-2.1.9-2.1 2.1 0 1.1.9 2.1 2.1 2.1 1.1 0 2.1-.9 2.1-2.1 0-1.2-.9-2.1-2.1-2.1zM3.4 33.3h12.3c2.9 0 5.3-2.4 5.3-5.3V11.2C21 8.3 18.6 5.9 15.7 5.9H3.4C.5 5.9-1.9 8.3-1.9 11.2v16.8c0 2.9 2.4 5.3 5.3 5.3z"/>
+            <text x="25" y="25" fill="#EE4D2D" font-family="Arial" font-weight="bold" font-size="22">Shopee</text>
+        </svg>
+
         <div class="animation-stage">
             <div class="truck-box">
-                <div class="truck">🚚</div>
-                <div class="tire-boom">💥</div>
+                <span class="truck">🚚</span>
+                <span class="tire-boom">💥</span>
             </div>
         </div>
         
-        <div class="content-box">
-            <h1>物流車正在努力超車中...</h1>
-            <p>好貨太搶手，物流引擎有點發燙了。<br>請稍候，我們正在全力全開中！</p>
-            
-            <div class="progress-wrapper">
-                <div class="progress-container">
-                    <div id="progress-bar"></div>
-                </div>
-                <div class="progress-status">
-                    <span>修復中...</span>
-                    <span><span id="seconds">15</span> 秒後自動重試</span>
-                </div>
+        <h1>物流車正在努力超車中...</h1>
+        <p id="tip-text">別擔心，您的購物車很安全。</p>
+        
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div id="progress-bar"></div>
             </div>
-            
-            <div class="action-box">
-                <button onclick="location.reload()" class="retry-btn">立即重試</button>
-                <a href="https://help.shopee.tw/" target="_blank" class="help-link">需要幫助？</a>
+            <div class="progress-info">
+                <span>系統搶修中</span>
+                <span><span id="seconds">15</span> 秒後自動重試</span>
             </div>
+        </div>
+        
+        <div class="action-box">
+            <button id="main-btn" onclick="handleRetry()" class="retry-btn">🔄 立即重試</button>
+            <div class="secondary-actions">
+                <a href="#" class="sub-btn">📦 我的訂單</a>
+                <a href="#" class="sub-btn">🏠 回首頁</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>若您的付款遇到問題，請別緊張</p>
+            <a href="https://help.shopee.tw/" target="_blank" class="help-link">點此聯絡客服協助處理 💬</a>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // 1. 倒數計時與進度條
+        const TOTAL_TIME = 15;
+        let timeLeft = TOTAL_TIME;
+        const progressBar = document.getElementById('progress-bar');
+        const secondsSpan = document.getElementById('seconds');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft < 0) timeLeft = 0;
+            
+            secondsSpan.innerText = timeLeft;
+            let progressWidth = ((TOTAL_TIME - timeLeft) / TOTAL_TIME) * 100;
+            progressBar.style.width = progressWidth + '%';
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                setTimeout(() => location.reload(), 500);
+            }
+        }, 1000);
+
+        // 2. 隨機安撫語切換
+        const tips = [
+            "正在為您檢查網路線...",
+            "物流司機正在努力趕路中！",
+            "好貨值得等待，請再給我們幾秒鐘。",
+            "別擔心，您的購物車很安全。",
+            "正在嘗試開啟超車燈..."
+        ];
+        const tipElement = document.getElementById('tip-text');
+        
+        setInterval(() => {
+            tipElement.style.opacity = 0;
+            setTimeout(() => {
+                const randomTip = tips[Math.floor(Math.random() * tips.length)];
+                tipElement.innerText = randomTip;
+                tipElement.style.opacity = 1;
+            }, 400);
+        }, 3500);
+
+        // 3. 按鈕互動
+        function handleRetry() {
+            const btn = document.getElementById('main-btn');
+            btn.innerHTML = "檢查中...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+            setTimeout(() => location.reload(), 800);
+        }
+    </script>
 </body>
 </html>
