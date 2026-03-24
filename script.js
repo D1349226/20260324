@@ -30,3 +30,22 @@ const countdown = setInterval(() => {
     }, 500);
   }
 }, 1000);
+const tips = [
+  "正在為您檢查網路線...",
+  "物流司機正在努力趕路中！",
+  "好貨值得等待，請再給我們幾秒鐘。",
+  "別擔心，您的購物車很安全。",
+  "正在重新啟動助跑器..."
+];
+
+const tipText = document.querySelector('.content-box p');
+
+// 每 3 秒換一句話
+setInterval(() => {
+  const randomTip = tips[Math.floor(Math.random() * tips.length)];
+  tipText.style.opacity = 0; // 先淡出
+  setTimeout(() => {
+    tipText.innerText = randomTip;
+    tipText.style.opacity = 1; // 再淡入
+  }, 500);
+}, 3000);
