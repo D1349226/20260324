@@ -1,46 +1,206 @@
+/* --- 基礎設定 --- */
+:root {
+  --shopee-orange: #EE4D2D;
+  --shopee-bg: #f5f5f5;
+  --text-dark: #333;
+  --text-light: #666;
+}
+
 body {
-  background-color: #f5f5f5;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  background-color: var(--shopee-bg);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
+  overflow: hidden;
+  position: relative;
 }
 
+/* --- 背景裝飾圖形 --- */
+.bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(50px);
+  z-index: 0;
+}
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background-color: #ffe0b2;
+  top: -100px;
+  right: -50px;
+}
+.shape-2 {
+  width: 400px;
+  height: 400px;
+  background-color: #ffccbc;
+  bottom: -150px;
+  left: -100px;
+}
+
+/* --- 主容器：毛玻璃與懸浮感 --- */
 .container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.4);
   text-align: center;
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  max-width: 400px;
+  max-width: 420px;
+  width: 90%;
+  z-index: 10;
+  transition: transform 0.3s ease;
 }
 
-.logo { width: 120px; margin-bottom: 20px; }
+/* RWD 響應式：手機版 */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+}
 
-h1 { color: #EE4D2D; font-size: 22px; }
+.logo {
+  width: 130px;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
 
-/* 進度條動畫 */
+/* --- 文字風格 --- */
+h1 {
+  color: var(--shopee-orange);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.content-box p {
+  color: var(--text-light);
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+/* --- 物流車動畫區 --- */
+.animation-stage {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.truck-box {
+  position: relative;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.truck {
+  /* 讓卡車有前進晃動感 */
+  animation: truckDrive 1.5s infinite linear;
+  z-index: 2;
+}
+
+.tire-boom {
+  font-size: 30px;
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  opacity: 0;
+  /* 輪胎爆炸、煙霧閃爍 */
+  animation: boomShow 1.5s infinite linear 0.5s;
+  z-index: 1;
+}
+
+@keyframes truckDrive {
+  0% { transform: translateX(-10px) rotate(0deg); }
+  25% { transform: translateX(0px) rotate(-2deg); }
+  50% { transform: translateX(10px) rotate(0deg); }
+  75% { transform: translateX(0px) rotate(2deg); }
+  100% { transform: translateX(-10px) rotate(0deg); }
+}
+
+@keyframes boomShow {
+  0%, 100% { opacity: 0; transform: scale(0.5) translate(0, 0); }
+  50% { opacity: 1; transform: scale(1.2) translate(-5px, -5px); }
+  70% { opacity: 0.8; transform: scale(1) translate(-10px, -10px); filter: blur(2px); }
+}
+
+/* --- 進度條美化 --- */
+.progress-wrapper {
+  margin-bottom: 30px;
+}
+
 .progress-container {
   background: #eee;
   border-radius: 10px;
   height: 10px;
-  margin: 20px 0;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 8px;
 }
 
 #progress-bar {
-  background: #EE4D2D;
+  background: linear-gradient(90deg, #ff8a65, var(--shopee-orange));
   height: 100%;
-  width: 0%; /* 由 JS 控制 */
+  width: 0%; /* JS 控制 */
+  border-radius: 10px;
+  transition: width 0.5s ease; /* 讓進度移動平滑 */
+}
+
+.progress-status {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+
+/* --- 按鈕與連結 --- */
+.action-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 .retry-btn {
-  background-color: #EE4D2D;
+  background-color: var(--shopee-orange);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(238, 77, 45, 0.3);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.retry-btn:hover {
+  background-color: #ff3c18;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(238, 77, 45, 0.4);
+}
+
+.retry-btn:active {
+  transform: translateY(1px);
+}
+
+.help-link {
+  color: #999;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.help-link:hover {
+  color: var(--shopee-orange);
+  text-decoration: underline;
 }
